@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0d0f14;
+  --foreground: #e5e7eb;
+  --card: #16171d;
+  --card-border: #2b2e3a;
+  --primary: #6366f1;
+  --primary-foreground: #11131a;
+  --accent: #1f2230;
+  --muted: #9ca3af;
+  --ring: rgba(99, 102, 241, 0.35);
 }
 
 @theme inline {
@@ -14,13 +21,35 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #05060b;
+    --foreground: #f4f4f5;
+    --card: #12131a;
+    --card-border: #232534;
+    --primary: #818cf8;
+    --primary-foreground: #05060b;
+    --accent: #1a1c28;
+    --muted: #a1a6b6;
+    --ring: rgba(129, 140, 248, 0.4);
   }
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(120% 140% at 50% -10%, #1b1e2b 0%, var(--background) 55%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  color-scheme: dark;
+}
+
+* {
+  border-color: var(--card-border);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
 }
