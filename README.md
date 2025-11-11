@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## VOC Memorizer
 
-## Getting Started
+Mobile-first vocabulary tracker connected to Supabase. Browse words with filters, pick a batch, and step through a memorization flow that reveals Mongolian explanations on demand.
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.17+ (Next.js 16 requirement)
+- A Supabase project exposing the `vocab_entries` table described in `docs/db.md`
+
+### Environment
+
+Create a `.env.local` file with your Supabase credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The client uses these values for every request; make sure they match the project that contains the `vocab_entries` data.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Develop
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies and start the dev server:
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open http://localhost:3000 on a mobile device or emulator.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Word list** – filter by part of speech and created date, then tap items to build a batch. Use “Start memorization” to jump into study mode.
+- **Memorization** – words appear in random order. Reveal the Mongolian explanation with **Show**, and advance with **Next** (the list reshuffles automatically when you reach the end).
 
-## Deploy on Vercel
+### Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Data fetches are client-side via the Supabase JS SDK.
+- Tailwind CSS v4 powers the responsive styling.
