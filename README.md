@@ -31,7 +31,7 @@ Open http://localhost:3000 on a mobile device or emulator.
 
 ### Usage
 
-- **Word list** – filter by part of speech and created date, then tap items to build a batch. Use “Start memorization” to jump into study mode.
+- **Word list** – filter by part of speech or an exact day, then tap items to build a batch. Use “Start memorization” to jump into study mode.
 - **Memorization** – words appear in random order. Reveal the Mongolian explanation with **Show**, and advance with **Next** (the list reshuffles automatically when you reach the end).
 
 ### Notes

@@ -20,8 +20,7 @@ export function MemorizationSession() {
   const searchParams = useSearchParams();
   const idsParam = searchParams.get("ids") ?? "";
   const typeParam = searchParams.get("type") ?? "";
-  const startParam = searchParams.get("start") ?? "";
-  const endParam = searchParams.get("end") ?? "";
+  const dayParam = searchParams.get("day") ?? "";
 
   const [queue, setQueue] = useState<VocabEntry[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -53,8 +52,8 @@ export function MemorizationSession() {
         const filters: VocabFilters = {
           ids,
           partOfSpeech: typeParam || undefined,
-          startDate: toStartOfDayIso(startParam),
-          endDate: toEndOfDayIso(endParam),
+          startDate: dayParam ? toStartOfDayIso(dayParam) : undefined,
+          endDate: dayParam ? toEndOfDayIso(dayParam) : undefined,
         };
         const data = await fetchVocabEntries(filters);
         if (!data.length) {
@@ -75,7 +74,7 @@ export function MemorizationSession() {
     };
 
     load();
-  }, [ids, typeParam, startParam, endParam]);
+  }, [ids, typeParam, dayParam]);
 
   const currentWord = queue[currentIndex];
   const progressLabel = queue.length
@@ -99,8 +98,9 @@ export function MemorizationSession() {
   const handleBack = () => {
     const params = new URLSearchParams();
     if (typeParam) params.set("type", typeParam);
-    if (startParam) params.set("start", startParam);
-    if (endParam) params.set("end", endParam);
+    if (dayParam) {
+      params.set("day", dayParam);
+    }
     router.push(`/?${params.toString()}`);
   };
 

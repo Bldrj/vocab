@@ -25,12 +25,10 @@ export function WordExplorer() {
 
   const [filters, setFilters] = useState<{
     partOfSpeech: string;
-    startDate: string;
-    endDate: string;
+    exactDate: string;
   }>({
     partOfSpeech: "",
-    startDate: "",
-    endDate: "",
+    exactDate: "",
   });
 
   useEffect(() => {
@@ -40,8 +38,10 @@ export function WordExplorer() {
       try {
         const queryFilters: VocabFilters = {
           partOfSpeech: filters.partOfSpeech || undefined,
-          startDate: toStartOfDayIso(filters.startDate),
-          endDate: toEndOfDayIso(filters.endDate),
+          startDate: filters.exactDate
+            ? toStartOfDayIso(filters.exactDate)
+            : undefined,
+          endDate: filters.exactDate ? toEndOfDayIso(filters.exactDate) : undefined,
         };
         const data = await fetchVocabEntries(queryFilters);
         setEntries(data);
@@ -55,7 +55,10 @@ export function WordExplorer() {
     };
 
     loadEntries();
-  }, [filters.partOfSpeech, filters.startDate, filters.endDate]);
+  }, [
+    filters.partOfSpeech,
+    filters.exactDate,
+  ]);
 
   const totalSelected = selectedIds.length;
 
@@ -78,11 +81,8 @@ export function WordExplorer() {
     if (filters.partOfSpeech) {
       params.set("type", filters.partOfSpeech);
     }
-    if (filters.startDate) {
-      params.set("start", filters.startDate);
-    }
-    if (filters.endDate) {
-      params.set("end", filters.endDate);
+    if (filters.exactDate) {
+      params.set("day", filters.exactDate);
     }
     router.push(`/memorize?${params.toString()}`);
   };
@@ -134,40 +134,21 @@ export function WordExplorer() {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-zinc-700">
-                Created after
-              </label>
-              <input
-                type="date"
-                className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:border-zinc-400 focus:outline-none"
-                value={filters.startDate}
-                onChange={(event) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    startDate: event.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-zinc-700">
-                Created before
-              </label>
-              <input
-                type="date"
-                className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:border-zinc-400 focus:outline-none"
-                value={filters.endDate}
-                onChange={(event) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    endDate: event.target.value,
-                  }))
-                }
-              />
-            </div>
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-zinc-700">Exact day</label>
+            <input
+              type="date"
+              className="rounded-xl border border-zinc-200 bg-white px-3 py-2 text-sm focus:border-zinc-400 focus:outline-none"
+              value={filters.exactDate}
+              onChange={(event) =>
+                setFilters((prev) => ({
+                  ...prev,
+                  exactDate: event.target.value,
+                }))
+              }
+            />
           </div>
+
         </div>
       </section>
 
