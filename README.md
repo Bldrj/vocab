@@ -38,4 +38,4 @@ Open http://localhost:3000 on a mobile device or emulator.
 
 - Data fetches are client-side via the Supabase JS SDK.
 - Tailwind CSS v4 powers the responsive styling.
- 
+  
